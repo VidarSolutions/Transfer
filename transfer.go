@@ -24,11 +24,11 @@ func NewTransfer(client *http.Client, transport *http.Transport) *TransferClient
 
 
 
-func (t *TransferClient) request(requestType string, URL string, json []byte )(*http.Response, error) {
+func (t *TransferClient) request(requestType string, URL string, data []byte )(*http.Response, error) {
 
 	method := strings.ToUpper(requestType)
 	if method != "GET" || method != "POST"{
-		return http.Response{}, fmt.Errorf("Incorrect Request type: %v", method)
+		return *http.Response{}, fmt.Errorf("Incorrect Request type: %v", method)
 	}
 		// Encode the struct as JSON
 		jsonData, err := json.Marshal(data)
@@ -38,7 +38,7 @@ func (t *TransferClient) request(requestType string, URL string, json []byte )(*
 		req, err := http.NewRequest(requestType, URL, bytes.NewBuffer(jsonData))
 		if err != nil {
 			
-			return http.Response{}, err
+			return *http.Response{}, err
 		}
 		// use the http client to fetch the page
 		resp, err2 := t.client.Do(req)
