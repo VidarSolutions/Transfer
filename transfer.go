@@ -26,7 +26,7 @@ func NewTransfer(client *http.Client, transport *http.Transport) *TransferClient
 func (t *TransferClient) Request(requestType string, URL string, data []byte )(*http.Response, error) {
 
 	method := strings.ToUpper(requestType)
-	if method != "GET" || method != "POST"{
+	if method != "GET" && method != "POST"{
 		return nil, fmt.Errorf("Incorrect Request type: %v", method)
 	}
 		// Encode the struct as JSON
