@@ -49,7 +49,7 @@ func (t *TransferClient) Request(requestType string, URL string, data []byte )(*
 			return resp, fmt.Errorf("Can't reach page: %v", err2)
 		}
 		defer resp.Body.Close()
-		return resp, fmt.Errorf("Request Successful : %v", err2)
+		return resp, nil
 	}
 	
 
