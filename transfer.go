@@ -1,32 +1,41 @@
 package Transfer
 
 import(
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
+	"golang.org/x/net/proxy"
 )
 
-type Transfer struct {
+type TransferClient struct {
 	client   http.Client
 	transport *http.Transport
 }
 
-func NewTransfer(client *http.Client, transport *http.Transport) *Transfer {
+func NewTransfer(client *http.Client, transport *http.Transport) *TransferClient {
 	if transport.Dial == nil {
 		transport.Dial = client.Transport.(*http.Transport).Dial
 	}
-	return &Transfer{client: *client, transport: transport}
+	return &TransferClient{client: *client, transport: transport}
 }
 
 
 
-func (t *Transfer) request(requestType string, URL string, json []byte )(http.Response, error) {
+func (t *TransferClient) request(requestType string, URL string, json []byte )(*http.Response, error) {
 
-	method = strings.ToUpper(requestType)
+	method := strings.ToUpper(requestType)
 	if method != "GET" || method != "POST"{
 		return http.Response{}, fmt.Errorf("Incorrect Request type: %v", method)
 	}
-		req, err := http.NewRequest(requestType, URL, json)
+		// Encode the struct as JSON
+		jsonData, err := json.Marshal(data)
+		if err != nil {
+			panic(err)
+		}
+		req, err := http.NewRequest(requestType, URL, bytes.NewBuffer(jsonData))
 		if err != nil {
 			
 			return http.Response{}, err
@@ -45,7 +54,7 @@ func (t *Transfer) request(requestType string, URL string, json []byte )(http.Re
 
 
 
-func Dialer(proxyAddress string)  Transfer{
+func Dialer(proxyAddress string)  TransferClient{
 	// create a socks5 dialer
 	dialer, err := proxy.SOCKS5("tcp", proxyAddress, nil, proxy.Direct)
 	if err != nil {
