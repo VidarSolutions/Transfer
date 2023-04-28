@@ -41,7 +41,7 @@ func (t *TransferClient) Request(requestType string, URL string, data []byte )(*
 		}
 		// use the http client to fetch the page
 		resp, err2 := t.client.Do(req)
-		if err != nil {
+		if err2 != nil {
 			
 			return resp, fmt.Errorf("Can't reach page: %v", err2)
 		}
