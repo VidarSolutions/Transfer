@@ -28,7 +28,7 @@ func (t *TransferClient) request(requestType string, URL string, data []byte )(*
 
 	method := strings.ToUpper(requestType)
 	if method != "GET" || method != "POST"{
-		return *http.Response{}, fmt.Errorf("Incorrect Request type: %v", method)
+		return nil, fmt.Errorf("Incorrect Request type: %v", method)
 	}
 		// Encode the struct as JSON
 		jsonData, err := json.Marshal(data)
@@ -38,7 +38,7 @@ func (t *TransferClient) request(requestType string, URL string, data []byte )(*
 		req, err := http.NewRequest(requestType, URL, bytes.NewBuffer(jsonData))
 		if err != nil {
 			
-			return *http.Response{}, err
+			return nil, err
 		}
 		// use the http client to fetch the page
 		resp, err2 := t.client.Do(req)
@@ -70,7 +70,7 @@ func Dialer(proxyAddress string)  TransferClient{
 	httpTransport.Dial = dialer.Dial
 
 	// create a new Transfer struct
-	return Transfer.NewTransfer(httpClient, httpTransport)
+	return NewTransfer(httpClient, httpTransport)
 
 
 }
