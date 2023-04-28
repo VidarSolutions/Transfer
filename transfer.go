@@ -20,13 +20,13 @@ func NewTransfer(client *http.Client, transport *http.Transport) *Transfer {
 
 
 
-func (t *Transfer) request(type string, URL string, json []byte )(http.Response, error) {
+func (t *Transfer) request(requestType string, URL string, json []byte )(http.Response, error) {
 
-	method = strings.ToUpper(type)
-	if method != "GET" || method != "POST{
+	method = strings.ToUpper(requestType)
+	if method != "GET" || method != "POST"{
 		return http.Response{}, fmt.Errorf("Incorrect Request type: %v", method)
 	}
-		req, err := http.NewRequest(type, URL, json)
+		req, err := http.NewRequest(requestType, URL, json)
 		if err != nil {
 			
 			return http.Response{}, err
