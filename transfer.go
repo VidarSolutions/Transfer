@@ -54,7 +54,7 @@ func (t *TransferClient) request(requestType string, URL string, data []byte )(*
 
 
 
-func Dialer(proxyAddress string)  TransferClient{
+func Dialer(proxyAddress string)  *TransferClient{
 	// create a socks5 dialer
 	dialer, err := proxy.SOCKS5("tcp", proxyAddress, nil, proxy.Direct)
 	if err != nil {
