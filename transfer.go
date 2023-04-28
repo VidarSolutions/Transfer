@@ -29,6 +29,9 @@ func (t *TransferClient) Request(requestType string, URL string, data []byte )(*
 	if method != "GET" && method != "POST"{
 		return nil, fmt.Errorf("Incorrect Request type: %v", method)
 	}
+	if !strings.HasPrefix(URL, "http://") {
+		URL = "http://" + URL
+	}
 		// Encode the struct as JSON
 		//jsonData, err := json.Marshal(data)
 		//if err != nil {
