@@ -38,10 +38,10 @@ func (t *Transfer) request(requestType string, URL string, json []byte )(http.Re
 			return resp, fmt.Errorf("Can't reach page: %v", err2)
 		}
 		defer resp.Body.Close()
-		
+		return resp, fmt.Errorf("Request Successful : %v", err2)
 	}
-	return resp, fmt.Errorf("Request Successful : %v", err2)
-}
+	
+
 
 
 
