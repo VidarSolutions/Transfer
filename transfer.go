@@ -10,8 +10,8 @@ import(
 )
 
 type TransferClient struct {
-	client   http.Client
-	transport *http.Transport
+	Client   http.Client
+	Transport *http.Transport
 }
 
 func NewTransfer(client *http.Client, transport *http.Transport) *TransferClient {
