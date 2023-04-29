@@ -18,7 +18,7 @@ func NewTransfer(client *http.Client, transport *http.Transport) *TransferClient
 	if transport.Dial == nil {
 		transport.Dial = client.Transport.(*http.Transport).Dial
 	}
-	return &TransferClient{client: *client, transport: transport}
+	return &TransferClient{Client: *client, Transport: transport}
 }
 
 
@@ -43,7 +43,7 @@ func (t *TransferClient) Request(requestType string, URL string, data []byte )(*
 			return nil, err
 		}
 		// use the http client to fetch the page
-		resp, err2 := t.client.Do(req)
+		resp, err2 := t.Client.Do(req)
 		if err2 != nil {
 			
 			return resp, fmt.Errorf("Can't reach page: %v", err2)
